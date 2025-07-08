@@ -50,35 +50,34 @@
       margin-top: 10px;
     }
 
- .hero {
-  position: relative;
-  z-index: 0;
-  background-image: url("https://aceofclubs.netlify.app/assets/001_homepage_hero1.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-  text-align: center;
-  padding: 120px 20px;
-}
+    .hero {
+      position: relative;
+      z-index: 0;
+      background-image: url("https://aceofclubs.netlify.app/assets/001_homepage_hero1.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+    }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* dark overlay */
-  z-index: 1;
-  pointer-events: none;
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      pointer-events: none;
+    }
 
-.hero h1,
-.hero p,
-.hero a {
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-}
-
+    .hero h1,
+    .hero p,
+    .hero a {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
 
     .hero p {
       font-size: 1.2em;
@@ -121,6 +120,20 @@
       height: 400px;
     }
 
+    .about-icons {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .about-icon {
+      width: 100px;
+      height: auto;
+    }
+
     footer {
       background: #ea6a1f;
       color: white;
@@ -135,6 +148,14 @@
 
       .hero h1 {
         font-size: 2em;
+      }
+
+      .about-icons {
+        gap: 40px;
+      }
+
+      .about-icon {
+        width: 70px;
       }
     }
   </style>
@@ -159,41 +180,39 @@
     <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
   </div>
 
-
-
   <section id="about">
-  <h2>About Us</h2>
-  <p>
-    At Ace of Clubs you can access a hot meal, clothing, a laundry service, showers, healthcare, housing & welfare support and access to computers. You don’t need to be referred, just turn up and let us know how we can help.
-  </p>
-  <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; text-align: center;">
-    <div>
-      <img src="https://aceofclubs.netlify.app/assets/004_icon_welcoming.png" alt="Welcoming Icon" style="width:100px; height:auto;">
-      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Welcoming</p>
-    </div>
-    <div>
-      <img src="https://aceofclubs.netlify.app/assets/004_icon_supportive.png" alt="Supportive Icon" style="width:100px; height:auto;">
-      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Supportive</p>
-    </div>
-    <div>
-      <img src="https://aceofclubs.netlify.app/assets/004_icon_inclusive.png" alt="Inclusive Icon" style="width:100px; height:auto;">
-      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Inclusive</p>
-    </div>
-  </div>
-    
-  <ul style="line-height: 1.8; margin-top: 20px;">
-    <li><strong>Hot meals</strong> available Monday to Friday</li>
-    <li><strong>Showers</strong> and <strong>laundry service</strong></li>
-    <li><strong>Clothing</strong> for everyday and job interviews</li>
-    <li><strong>Support workers</strong> to assist with housing, benefits & welfare</li>
-    <li><strong>Healthcare access</strong>: NHS nurse & dentist on-site regularly</li>
-    <li><strong>Computer access</strong> for job search, emails, and essential tasks</li>
-  </ul>
-  <p style="margin-top: 20px;">
-    You don’t need a referral — just turn up and let us know how we can help.
-  </p>
-</section>
+    <h2>About Us</h2>
+    <p>
+      At Ace of Clubs you can access a hot meal, clothing, a laundry service, showers, healthcare, housing & welfare support and access to computers. You don’t need to be referred, just turn up and let us know how we can help.
+    </p>
 
+    <div class="about-icons">
+      <div>
+        <img src="https://aceofclubs.netlify.app/assets/004_icon_welcoming.png" class="about-icon" alt="Welcoming Icon">
+        <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Welcoming</p>
+      </div>
+      <div>
+        <img src="https://aceofclubs.netlify.app/assets/004_icon_supportive.png" class="about-icon" alt="Supportive Icon">
+        <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Supportive</p>
+      </div>
+      <div>
+        <img src="https://aceofclubs.netlify.app/assets/004_icon_inclusive.png" class="about-icon" alt="Inclusive Icon">
+        <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Inclusive</p>
+      </div>
+    </div>
+
+    <ul style="line-height: 1.8; margin-top: 20px;">
+      <li><strong>Hot meals</strong> available Monday to Friday</li>
+      <li><strong>Showers</strong> and <strong>laundry service</strong></li>
+      <li><strong>Clothing</strong> for everyday and job interviews</li>
+      <li><strong>Support workers</strong> to assist with housing, benefits & welfare</li>
+      <li><strong>Healthcare access</strong>: NHS nurse & dentist on-site regularly</li>
+      <li><strong>Computer access</strong> for job search, emails, and essential tasks</li>
+    </ul>
+    <p style="margin-top: 20px;">
+      You don’t need a referral — just turn up and let us know how we can help.
+    </p>
+  </section>
 
   <section id="volunteer">
     <h2>Volunteer</h2>
