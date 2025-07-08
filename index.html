@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ace of Clubs</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fff8f3; color: #222; }
+    header { background: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 999; }
+    .logo { font-weight: bold; font-size: 1.5em; color: #ea6a1f; }
+    nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: 500; }
+    .donate-button { background: #ea6a1f; color: white; padding: 10px 16px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+    .hero {
+      background-image: url('https://aceofclubs.org.uk/wp-content/uploads/2024/06/Home-page.jpeg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .hero h1 { font-size: 3em; margin: 0; }
+    .hero p { font-size: 1.2em; margin: 10px 0 30px; }
+    section { padding: 60px 20px; max-width: 1100px; margin: auto; }
+    h2 { color: #ea6a1f; }
+    .grid { display: flex; flex-wrap: wrap; gap: 20px; }
+    .grid div { flex: 1 1 45%; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
+    .grid img { width: 100%; border-radius: 8px; }
+    iframe { width: 100%; border: none; margin-top: 10px; height: 400px; }
+    footer { background: #ea6a1f; color: white; text-align: center; padding: 30px 10px; }
+    @media (max-width: 768px) {
+      .grid { flex-direction: column; }
+      .hero h1 { font-size: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ACE OF CLUBS</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#corporate">Corporate</a>
+      <a href="#contribute">Contribute</a>
+      <a href="#shop">Shop</a>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>A Place of Community</h1>
+    <p>Helping homeless and vulnerable people in South London</p>
+    <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+  </div>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We offer transformative support for people in immediate need and those who require longer term support to help them rebuild their lives.</p>
+  </section>
+
+  <section id="volunteer">
+    <h2>Volunteer</h2>
+    <div class="grid">
+      <div>
+        <p>Volunteers are at the very heart of Ace of Clubs. Join our community and provide transformative support to those who are homeless, vulnerable, and otherwise marginalised.</p>
+        <a class="donate-button" href="https://aceofclubs.org.uk/wp-content/uploads/2025/02/Volunteer-Application-Form-25.docx" target="_blank">Volunteer Application</a>
+      </div>
+      <div><img src="https://aceofclubs.org.uk/wp-content/uploads/2024/06/Volunteers.jpeg" alt="Volunteers"></div>
+    </div>
+    <br/>
+    <div class="grid">
+      <div><img src="https://media.licdn.com/dms/image/v2/D4E22AQH5pHkR0ynyWA/feedshare-shrink_1280/B4EZeMpri7HwAk-/0/1750411427580?e=1755129600&v=beta&t=WbYE7Vi8VLf7ApIVfBvmZvoaXV-WSJdzaxN8OFAQzYg" alt="Volunteers 2"></div>
+    </div>
+  </section>
+
+  <section id="corporate">
+    <h2>Corporate Partnerships</h2>
+    <div class="grid">
+      <div><img src="https://aceofclubs.org.uk/wp-content/uploads/2025/02/PXL_20250203_144041515-edited-scaled.jpg" alt="Corporate Partnership"></div>
+      <div>
+        <p>If you're interested in hearing how corporates can support Ace of Clubs, watch our recent partnership in action below:</p>
+        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7310640342242873345?collapsed=1" title="Corporate video"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="contribute">
+    <h2>Contribute</h2>
+    <p>Help support South London’s homeless and put your giving plan in place. Your contribution will help keep our services running and make a positive change to our visitor’s lives.</p>
+    <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate Now</a>
+  </section>
+
+  <section id="shop">
+    <h2>Shop</h2>
+    <p>Visit our shop and support us through your purchases.</p>
+    <a class="donate-button" href="https://aceofclubs.org.uk/shop/" target="_blank">Visit Shop</a>
+  </section>
+
+  <footer>
+    <p>© 2025 Ace of Clubs | Registered Charity No. 1055187</p>
+  </footer>
+</body>
+</html>
