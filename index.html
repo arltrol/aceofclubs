@@ -127,6 +127,44 @@
       margin: 10px 0 30px;
     }
 
+.hero-slideshow {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.hero-slideshow .slide {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-slideshow .slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-slideshow::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.2); /* darker or lighter tint */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  padding-top: 140px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+    
     section {
       padding: 60px 20px;
       max-width: 1100px;
@@ -217,11 +255,30 @@
     </nav>
   </header>
 
-  <div class="hero">
-    <h1>A Place of Community</h1>
-    <p>A Day Centre for the homeless & vulnerable in Clapham</p>
-    <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+<div class="hero-slideshow">
+  <div class="slide active" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero1.jpeg');">
+    <div class="hero-content">
+      <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
   </div>
+  <div class="slide" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero2.jpeg');">
+    <div class="hero-content">
+       <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
+  </div>
+    <div class="slide" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero3.jpeg');">
+    <div class="hero-content">
+     <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+       <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
+  </div>
+</div>
+
 
  <section id="about">
   <h2>About Us</h2>
@@ -377,6 +434,17 @@
   <footer>
     <p>© 2025 Ace of Clubs | Registered Charity No. 1055187</p>
   </footer>
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll(".hero-slideshow .slide");
 
+  setInterval(() => {
+    slides[current].classList.remove("active");
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+  }, 5000); // 5 seconds per slide
+</script>
+
+  
 </body>
 </html>
