@@ -5,35 +5,141 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ace of Clubs</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fff8f3; color: #222; }
-    header { background: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 999; }
-    .logo { font-weight: bold; font-size: 1.5em; color: #ea6a1f; }
-    nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: 500; }
-    .donate-button { background: #ea6a1f; color: white; padding: 10px 16px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f3;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #ea6a1f;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .donate-button {
+      background: #ea6a1f;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
     .hero {
+      position: relative;
       background-image: url('https://aceofclubs.org.uk/wp-content/uploads/2024/06/Home-page.jpeg');
       background-size: cover;
       background-position: center;
       color: white;
       text-align: center;
-      padding: 100px 20px;
+      padding: 120px 20px;
     }
-    .hero h1 { font-size: 3em; margin: 0; }
-    .hero p { font-size: 1.2em; margin: 10px 0 30px; }
-    section { padding: 60px 20px; max-width: 1100px; margin: auto; }
-    h2 { color: #ea6a1f; }
-    .grid { display: flex; flex-wrap: wrap; gap: 20px; }
-    .grid div { flex: 1 1 45%; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
-    .grid img { width: 100%; border-radius: 8px; }
-    iframe { width: 100%; border: none; margin-top: 10px; height: 400px; }
-    footer { background: #ea6a1f; color: white; text-align: center; padding: 30px 10px; }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5); /* dark overlay */
+      z-index: 1;
+    }
+
+    .hero h1, .hero p, .hero a {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin: 10px 0 30px;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #ea6a1f;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .grid div {
+      flex: 1 1 45%;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+
+    .grid img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    iframe {
+      width: 100%;
+      border: none;
+      margin-top: 10px;
+      height: 400px;
+    }
+
+    footer {
+      background: #ea6a1f;
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+    }
+
     @media (max-width: 768px) {
-      .grid { flex-direction: column; }
-      .hero h1 { font-size: 2em; }
+      .grid {
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 2em;
+      }
     }
   </style>
 </head>
 <body>
+
   <header>
     <div class="logo">ACE OF CLUBS</div>
     <nav>
@@ -62,20 +168,20 @@
     <div class="grid">
       <div>
         <p>Volunteers are at the very heart of Ace of Clubs. Join our community and provide transformative support to those who are homeless, vulnerable, and otherwise marginalised.</p>
-        <a class="donate-button" href="https://aceofclubs.org.uk/wp-content/uploads/2025/02/Volunteer-Application-Form-25.docx" target="_blank">Volunteer Application</a>
+        <a class="donate-button" href="https://aceofclubs.org.uk/wp-content/uploads/2025/02/Volunteer-Application-Form-25.docx" target="_blank">Download Volunteer Form</a>
       </div>
       <div><img src="https://aceofclubs.org.uk/wp-content/uploads/2024/06/Volunteers.jpeg" alt="Volunteers"></div>
     </div>
     <br/>
     <div class="grid">
-      <div><img src="https://media.licdn.com/dms/image/v2/D4E22AQH5pHkR0ynyWA/feedshare-shrink_1280/B4EZeMpri7HwAk-/0/1750411427580?e=1755129600&v=beta&t=WbYE7Vi8VLf7ApIVfBvmZvoaXV-WSJdzaxN8OFAQzYg" alt="Volunteers 2"></div>
+      <div><img src="https://media.licdn.com/dms/image/v2/D4E22AQH5pHkR0ynyWA/feedshare-shrink_1280/B4EZeMpri7HwAk-/0/1750411427580?e=1755129600&v=beta&t=WbYE7Vi8VLf7ApIVfBvmZvoaXV-WSJdzaxN8OFAQzYg" alt="Volunteer 2"></div>
     </div>
   </section>
 
   <section id="corporate">
     <h2>Corporate Partnerships</h2>
     <div class="grid">
-      <div><img src="https://aceofclubs.org.uk/wp-content/uploads/2025/02/PXL_20250203_144041515-edited-scaled.jpg" alt="Corporate Partnership"></div>
+      <div><img src="https://aceofclubs.org.uk/wp-content/uploads/2025/02/PXL_20250203_144041515-edited-scaled.jpg" alt="Corporate Partner"></div>
       <div>
         <p>If you're interested in hearing how corporates can support Ace of Clubs, watch our recent partnership in action below:</p>
         <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7310640342242873345?collapsed=1" title="Corporate video"></iframe>
@@ -98,5 +204,6 @@
   <footer>
     <p>© 2025 Ace of Clubs | Registered Charity No. 1055187</p>
   </footer>
+
 </body>
 </html>
