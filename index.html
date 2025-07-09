@@ -18,12 +18,17 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 24px;
-  max-width: 1200px; /* Optional: constrain the grid width */
+  max-width: 1200px;
   margin: 0 auto;
+  /* Add clearfix to ensure proper height calculation */
+  &:after {
+    content: "";
+    flex: 0 0 100%;
+  }
 }
 
 .card {
-  flex: 0 1 calc(33.33% - 16px); /* Adjusted for 24px total gap */
+  flex: 0 0 calc(33.33% - 16px); /* Changed to 0 0 to fix width, adjusted gap */
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -32,7 +37,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  min-width: 0; /* Prevents overflow issues */
+  min-width: 0;
+  padding: 20px; /* Standardize padding to match .card-body */
 }
 
 .card-header {
@@ -45,7 +51,7 @@
 }
 
 .card-body {
-  padding: 20px;
+  padding: 0; /* Remove padding since it's now on .card */
 }
 
 .card-body p {
@@ -59,7 +65,7 @@
 }
 
 .card.icon-style {
-  padding: 32px 24px;
+  padding: 20px; /* Match standard card padding */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   border-radius: 20px;
   background: #fff;
@@ -266,23 +272,24 @@
       padding: 30px 10px;
     }
 
-    @media (max-width: 768px) {
-      .grid {
-        flex-direction: column;
-      }
-
-      .hero h1 {
-        font-size: 2em;
-      }
-
-      .about-icons {
-        gap: 40px;
-      }
-
-      .about-icon {
-        width: 70px;
-      }
-    }
+ @media (max-width: 768px) {
+  .card {
+    flex: 1 1 100%;
+  }
+  .grid {
+    flex-direction: column;
+  }
+  .hero h1 {
+    font-size: 2em;
+  }
+  .about-icons {
+    gap: 40px;
+  }
+  .about-icon {
+    width: 70px;
+  }
+}
+    
   </style>
 </head>
 <body>
