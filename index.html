@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ace of Clubs</title>
-  <style>
+ <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -17,14 +17,14 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px; /* Reduced gap to ensure three cards fit */
+      gap: 20px;
       max-width: 1200px;
       margin: 0 auto;
-      overflow: hidden; /* Simple clearfix */
+      overflow: hidden;
     }
 
     .card {
-      flex: 0 0 calc(33.33% - 13.33px); /* Adjusted for 20px gap, approximates three equal columns */
+      flex: 0 0 calc(33.33% - 13.34px); /* Fine-tuned calculation for three columns with 20px gap */
       background: white;
       border-radius: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -67,26 +67,26 @@
       background: #fff;
     }
 
-    .card.icon-style img {
+    .card-icon-img {
       width: 100px;
       height: auto;
       margin-bottom: 18px;
     }
 
-    .card.icon-style p {
+    .card-icon-text {
       margin: 0 0 14px;
       line-height: 1.6;
       font-size: 1.1em;
       color: #444;
     }
 
-    .card.icon-style p:first-of-type {
+    .card-icon-text:first-child {
       font-weight: bold;
       font-size: 1.4em;
       margin-bottom: 12px;
     }
 
-    .card.icon-style p:last-of-type {
+    .card-icon-text:last-child {
       color: #999;
       font-size: 1em;
       margin-bottom: 0;
@@ -227,6 +227,7 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      min-width: 0;
     }
 
     .grid img {
