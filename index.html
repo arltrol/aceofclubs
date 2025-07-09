@@ -330,7 +330,25 @@
     display: block;
   }
 }
-  
+
+  .video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 </style>
 
 </head>
@@ -538,15 +556,15 @@
     <div class="grid">
       <div>
         <p>If you're interested in hearing how corporates can support Ace of Clubs, watch our recent partnership in action below:</p>
-        <img src="https://aceofclubs.netlify.app/assets/003_corporatepartner.jpg" alt="Corporate Partner"></div>
-     <div style="position: relative; width: 100%; padding-top: 56.25%; border-radius: 8px; overflow: hidden;">
-  <iframe 
-    src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7310640342242873345?collapsed=1" 
-    title="Corporate video"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
-    allowfullscreen>
-  </iframe>
-</div>>
+        <img src="https://aceofclubs.netlify.app/assets/003_corporatepartner.jpg" alt="Corporate Partner">
+      </div>
+    <div class="video-wrapper">
+      <iframe 
+        src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7310640342242873345?collapsed=1" 
+        title="Corporate video"
+        allowfullscreen>
+      </iframe>
+</div>
     </div>
   </section>
 
