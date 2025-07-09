@@ -349,6 +349,26 @@
   border: none;
 }
 
+.volunteer-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.volunteer-photo-grid img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .volunteer-photo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+  
 </style>
 
 </head>
@@ -546,9 +566,12 @@
       <div><img src="https://aceofclubs.netlify.app/assets/002_volunteers.jpeg" alt="Volunteers"></div>
     </div>
     <br/>
-    <div class="grid">
-      <div><img src="https://aceofclubs.netlify.app/assets/002_volunteers5.jpeg" alt="Volunteer 2"></div>
-    </div>
+   <div class="volunteer-photo-grid">
+  <img src="https://aceofclubs.netlify.app/assets/002_volunteers2.jpeg" alt="Volunteer 2" />
+  <img src="https://aceofclubs.netlify.app/assets/002_volunteers3.jpeg" alt="Volunteer 3" />
+  <img src="https://aceofclubs.netlify.app/assets/002_volunteers4.jpeg" alt="Volunteer 4" />
+  <img src="https://aceofclubs.netlify.app/assets/002_volunteers5.jpeg" alt="Volunteer 5" />
+</div>
   </section>
 
  <section id="corporate">
