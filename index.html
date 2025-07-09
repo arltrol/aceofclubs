@@ -5,282 +5,286 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ace of Clubs</title>
 <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff8f3;
-      color: #222;
-    }
-
-.cards-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
-}
-
-.card {
-  flex: 0 1 calc(33.33% - 24px);
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.card-header {
-  background: #e5911d;
-  color: white;
-  padding: 16px;
-  font-weight: bold;
-  font-size: 1.5em;
-  width: 100%;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.card-body p {
-  margin: 10px 0;
-}
-
-@media (max-width: 768px) {
-  .card {
-    flex: 1 1 100%;
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff8f3;
+    color: #222;
   }
-}
 
-    .card.icon-style {
-  padding: 32px 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  border-radius: 20px;
-  background: #fff;
-  max-width: 310px;
-}
+  .cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+  }
 
-    .card.icon-style img {
-  width: 100px;
-  height: auto;
-  margin-bottom: 18px;
-}
+  .card {
+    flex: 0 1 calc(33.33% - 24px);
+    max-width: 340px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
-.card.icon-style p {
-  margin: 0 0 14px;
-  line-height: 1.6;
-  font-size: 1.1em;
-  color: #444;
-}
+  .card-header {
+    background: #e5911d;
+    color: white;
+    padding: 16px;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 100%;
+  }
 
-.card.icon-style p:first-of-type {
-  font-weight: bold;
-  font-size: 1.4em;
-  margin-bottom: 12px;
-}
+  .card-body {
+    padding: 20px;
+  }
 
-.card.icon-style p:last-of-type {
-  color: #999;
-  font-size: 1em;
-  margin-bottom: 0;
-}
+  .card-body p {
+    margin: 10px 0;
+  }
 
-    
-    header {
-      background: #fff;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 999;
+  @media (max-width: 768px) {
+    .card {
+      flex: 1 1 100%;
+      max-width: 100%;
     }
+  }
 
-    .logo {
-      font-weight: bold;
-      font-size: 1.5em;
-      color: #ea6a1f;
-    }
+  .card.icon-style {
+    padding: 32px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    background: #fff;
+  }
 
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
+  .card.icon-style img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 18px;
+  }
 
-    .donate-button {
-      background: #ea6a1f;
-      color: white;
-      padding: 10px 16px;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 10px;
-    }
+  .card.icon-style p {
+    margin: 0 0 14px;
+    line-height: 1.6;
+    font-size: 1.1em;
+    color: #444;
+  }
 
-    .hero {
-      position: relative;
-      z-index: 0;
-      background-image: url("https://aceofclubs.netlify.app/assets/001_homepage_hero3.jpeg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
-      text-align: center;
-      padding: 120px 20px;
-    }
+  .card.icon-style p:first-of-type {
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-bottom: 12px;
+  }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.2);
-      z-index: 1;
-      pointer-events: none;
-    }
+  .card.icon-style p:last-of-type {
+    color: #999;
+    font-size: 1em;
+    margin-bottom: 0;
+  }
 
-    .hero h1,
-    .hero p,
-    .hero a {
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-    }
+  header {
+    background: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
 
-    .hero p {
-      font-size: 1.2em;
-      margin: 10px 0 30px;
-    }
+  .logo {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #ea6a1f;
+  }
 
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
 
-    .hero-slideshow {
-  position: relative;
-  width: 100vw;
-  height: 60vh; /* Set to 60% of screen height */
-  max-height: 600px; /* Optional upper limit */
-  overflow: hidden;
-  margin: 0;
-}
+  .donate-button {
+    background: #ea6a1f;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+  }
 
+  .hero {
+    position: relative;
+    z-index: 0;
+    background-image: url("https://aceofclubs.netlify.app/assets/001_homepage_hero3.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+  }
 
-.hero-slideshow .slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: none;
+  }
 
+  .hero h1,
+  .hero p,
+  .hero a {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
 
-.hero-slideshow .slide.active {
-  opacity: 1;
-  z-index: 2;
-}
+  .hero p {
+    font-size: 1.2em;
+    margin: 10px 0 30px;
+  }
 
-.hero-slideshow::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.2); /* darker or lighter tint */
-  z-index: 1;
-}
+  .hero-slideshow {
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    max-height: 600px;
+    overflow: hidden;
+    margin: 0;
+  }
 
-.hero-content {
-  position: relative;
-  z-index: 3;
-  color: white;
-  text-align: center;
-  padding-top: 140px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-}
+  .hero-slideshow .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
 
-    
-    section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
+  .hero-slideshow .slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
 
-    h2 {
-      color: #ea6a1f;
-    }
+  .hero-slideshow::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
 
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    color: white;
+    text-align: center;
+    padding-top: 140px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  h2 {
+    color: #ea6a1f;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .grid div {
+    flex: 1 1 45%;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .grid img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  iframe {
+    width: 100%;
+    border: none;
+    margin-top: 10px;
+    height: 400px;
+  }
+
+  .about-icons {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .about-icon {
+    width: 100px;
+    height: auto;
+  }
+
+  footer {
+    background: #ea6a1f;
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+  }
+
+  @media (max-width: 768px) {
     .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      flex-direction: column;
     }
 
-    .grid div {
-      flex: 1 1 45%;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-    }
-
-    .grid img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    iframe {
-      width: 100%;
-      border: none;
-      margin-top: 10px;
-      height: 400px;
+    .hero h1 {
+      font-size: 2em;
     }
 
     .about-icons {
-      display: flex;
-      justify-content: center;
-      gap: 100px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-      text-align: center;
+      gap: 40px;
     }
 
     .about-icon {
-      width: 100px;
-      height: auto;
+      width: 70px;
     }
+  }
+</style>
 
-    footer {
-      background: #ea6a1f;
-      color: white;
-      text-align: center;
-      padding: 30px 10px;
-    }
-
-    @media (max-width: 768px) {
-      .grid {
-        flex-direction: column;
-      }
-
-      .hero h1 {
-        font-size: 2em;
-      }
-
-      .about-icons {
-        gap: 40px;
-      }
-
-      .about-icon {
-        width: 70px;
-      }
-    }
-  </style>
 </head>
 <body>
 
