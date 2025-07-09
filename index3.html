@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ace of Clubs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f3;
+      color: #222;
+    }
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.card {
+  flex: 0 1 calc(33.33% - 24px);
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-header {
+  background: #e5911d;
+  color: white;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 1.5em;
+  width: 100%;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-body p {
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 100%;
+  }
+}
+
+    
+    header {
+      background: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: #ea6a1f;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .donate-button {
+      background: #ea6a1f;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 0;
+      background-image: url("https://aceofclubs.netlify.app/assets/001_homepage_hero3.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero h1,
+    .hero p,
+    .hero a {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin: 10px 0 30px;
+    }
+
+
+    .hero-slideshow {
+  position: relative;
+  width: 100vw;
+  height: 60vh; /* Set to 60% of screen height */
+  max-height: 600px; /* Optional upper limit */
+  overflow: hidden;
+  margin: 0;
+}
+
+
+.hero-slideshow .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+
+.hero-slideshow .slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-slideshow::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.2); /* darker or lighter tint */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  padding-top: 140px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+    
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #ea6a1f;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .grid div {
+      flex: 1 1 45%;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+
+    .grid img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    iframe {
+      width: 100%;
+      border: none;
+      margin-top: 10px;
+      height: 400px;
+    }
+
+    .about-icons {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .about-icon {
+      width: 100px;
+      height: auto;
+    }
+
+    footer {
+      background: #ea6a1f;
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 2em;
+      }
+
+      .about-icons {
+        gap: 40px;
+      }
+
+      .about-icon {
+        width: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">ACE OF CLUBS</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#corporate">Corporate</a>
+      <a href="#contribute">Contribute</a>
+      <a href="#shop">Shop</a>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </nav>
+  </header>
+
+<div class="hero-slideshow">
+  <div class="slide active" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero1.jpeg');">
+    <div class="hero-content">
+      <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero2.jpeg');">
+    <div class="hero-content">
+       <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+      <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
+  </div>
+    <div class="slide" style="background-image: url('https://aceofclubs.netlify.app/assets/001_homepage_hero3.jpeg');">
+    <div class="hero-content">
+     <h1>A Place of Community</h1>
+      <p>A Day Centre for the homeless & vulnerable in Clapham</p>
+       <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
+    </div>
+  </div>
+</div>
+
+
+ <section id="about">
+  <h2>About Us</h2>
+  <p>
+    At Ace of Clubs you can access a hot meal, clothing, a laundry service, showers, healthcare, housing & welfare support and access to computers. You don’t need to be referred, just turn up and let us know how we can help.
+  </p>
+
+  <div class="about-icons">
+    <div>
+      <img src="https://aceofclubs.netlify.app/assets/004_icon_welcoming.png" class="about-icon" alt="Welcoming Icon">
+      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Welcoming</p>
+    </div>
+    <div>
+      <img src="https://aceofclubs.netlify.app/assets/004_icon_supportive.png" class="about-icon" alt="Supportive Icon">
+      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Supportive</p>
+    </div>
+    <div>
+      <img src="https://aceofclubs.netlify.app/assets/004_icon_inclusive.png" class="about-icon" alt="Inclusive Icon">
+      <p style="margin-top: 10px; font-weight: bold; color: #ea6a1f;">Inclusive</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <!-- Food -->
+    <div class="card">
+      <div class="card-header">Food</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.2em; margin-bottom: 4px;">Weekdays</p>
+        <p style="color: #999; margin: 0;">12:00 – 14:15</p>
+        <p style="margin-top: 16px;">You’re welcome to join us for lunch Monday to Friday (including bank holidays). There is a £1 charge.</p>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="card">
+      <div class="card-header">Support</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.2em; margin-bottom: 4px;">How can we help?</p>
+        <p>Speak to a Support Worker about housing, benefits, or anything else you're struggling with. We’re here to listen and help.</p>
+      </div>
+    </div>
+
+    <!-- Clothing -->
+    <div class="card">
+      <div class="card-header">Clothing</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.2em; margin-bottom: 4px;">Weekdays</p>
+        <p style="color: #999; margin: 0;">12:00 – 14:15</p>
+        <p style="margin-top: 16px;">We provide clothes for everyday use or job interviews — from socks to jackets, depending on availability.</p>
+      </div>
+    </div>
+
+    <!-- Showers -->
+    <div class="card">
+      <div class="card-header">Showers</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Mon, Wed, Fri</p>
+        <p style="color: #999;">09:20 – 11:50</p>
+        <p style="margin-top: 12px;">Book in advance. We have two showers with five 20min slots available each morning. Call:<br><strong>020 7720 2811</strong></p>
+      </div>
+    </div>
+
+    <!-- Laundry -->
+    <div class="card">
+      <div class="card-header">Laundry</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Weekdays</p>
+        <p style="margin-top: 12px;">If you have items of clothing to wash, let us know. 24-hour turnaround. £2 per load.</p>
+      </div>
+    </div>
+
+    <!-- NHS Nurse -->
+    <div class="card">
+      <div class="card-header">NHS Nurse</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Mon & Thu</p>
+        <p style="color: #999;">12:00 – 14:30</p>
+        <p style="margin-top: 12px;">NHS nurses are on site twice a week for medical advice and basic treatment. Call 999 in emergencies.</p>
+      </div>
+    </div>
+
+    <!-- NHS Dentist -->
+    <div class="card">
+      <div class="card-header">NHS Dentist</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Wednesdays</p>
+        <p style="color: #999;">10:00 – 14:30</p>
+        <p style="margin-top: 12px;">Mobile dental unit on site weekly. Call to book:<br><strong>020 7720 2811</strong></p>
+      </div>
+    </div>
+
+    <!-- Housing Advice -->
+    <div class="card">
+      <div class="card-header">Housing Advice</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Weekdays</p>
+        <p style="color: #999;">12:00 – 14:30</p>
+        <p style="margin-top: 12px;">GlassDoor offer help with housing, benefits & finances. First come, first served.</p>
+      </div>
+    </div>
+
+    <!-- Computers -->
+    <div class="card">
+      <div class="card-header">Computers</div>
+      <div class="card-body">
+        <p style="font-weight: bold; font-size: 1.1em;">Weekdays</p>
+        <p style="color: #999;">12:00 – 14:30</p>
+        <p style="margin-top: 12px;">Computers available for job search, emails, and tasks. Ask staff to use one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section id="volunteer">
+    <h2>Volunteer</h2>
+    <div class="grid">
+      <div>
+        <p>Volunteers are at the very heart of Ace of Clubs. Join our community and provide transformative support to those who are homeless, vulnerable, and otherwise marginalised.</p>
+        <a class="donate-button" href="https://aceofclubs.org.uk/wp-content/uploads/2025/02/Volunteer-Application-Form-25.docx" target="_blank">Download Volunteer Form</a>
+      </div>
+      <div><img src="https://aceofclubs.netlify.app/assets/002_volunteers.jpeg" alt="Volunteers"></div>
+    </div>
+    <br/>
+    <div class="grid">
+      <div><img src="https://media.licdn.com/dms/image/v2/D4E22AQH5pHkR0ynyWA/feedshare-shrink_1280/B4EZeMpri7HwAk-/0/1750411427580?e=1755129600&v=beta&t=WbYE7Vi8VLf7ApIVfBvmZvoaXV-WSJdzaxN8OFAQzYg" alt="Volunteer 2"></div>
+    </div>
+  </section>
+
+  <section id="corporate">
+    <h2>Corporate Partnerships</h2>
+    <div class="grid">
+      <div><img src="https://aceofclubs.netlify.app/assets/003_corporatepartner.jpg" alt="Corporate Partner"></div>
+      <div>
+        <p>If you're interested in hearing how corporates can support Ace of Clubs, watch our recent partnership in action below:</p>
+        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7310640342242873345?collapsed=1" title="Corporate video"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="contribute">
+    <h2>Contribute</h2>
+    <p>Help support South London’s homeless and put your giving plan in place. Your contribution will help keep our services running and make a positive change to our visitor’s lives.</p>
+    <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate Now</a>
+  </section>
+
+  <section id="shop">
+    <h2>Shop</h2>
+    <p>Visit our shop and support us through your purchases.</p>
+    <a class="donate-button" href="https://aceofclubs.org.uk/shop/" target="_blank">Visit Shop</a>
+  </section>
+
+  <footer>
+    <p>© 2025 Ace of Clubs | Registered Charity No. 1055187</p>
+  </footer>
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll(".hero-slideshow .slide");
+
+  setInterval(() => {
+    slides[current].classList.remove("active");
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+  }, 5000); // 5 seconds per slide
+</script>
+
+  
+</body>
+</html>
