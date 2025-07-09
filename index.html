@@ -287,12 +287,65 @@
       width: 70px;
     }
   }
+
+.hamburger {
+  display: none;
+  font-size: 2em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ea6a1f;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 6px;
+}
+
+.mobile-nav a {
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+  
 </style>
 
 </head>
 <body>
 
   <header>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+<div class="mobile-nav" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#volunteer">Volunteer</a>
+  <a href="#corporate">Corporate</a>
+  <a href="#contribute">Contribute</a>
+  <a href="#shop">Shop</a>
+  <a href="https://aceofclubs.enthuse.com/donate#!/" target="_blank" class="donate-button">Donate</a>
+</div>
     <div class="logo">ACE OF CLUBS</div>
     <nav>
       <a href="#about">About</a>
@@ -517,6 +570,11 @@
   }, 5000); // 5 seconds per slide
 </script>
 
-  
+  <script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+</script>
 </body>
 </html>
