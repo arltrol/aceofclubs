@@ -373,6 +373,66 @@
   color: #ea6a1f;
 }
 
+  .quotes-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.quote-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.quote-box {
+  max-width: 480px;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.quote-box img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.quote-text {
+  text-align: left;
+  font-size: 1.1em;
+  color: #444;
+}
+
+.quote-name {
+  margin-top: 10px;
+  display: inline-block;
+  background: #e5911d;
+  color: white;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+@media (max-width: 768px) {
+  .quote-box {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .quote-text {
+    text-align: center;
+  }
+}
+
   
 </style>
 
@@ -450,6 +510,30 @@
        <a class="donate-button" href="https://aceofclubs.enthuse.com/donate#!/" target="_blank">Donate</a>
     </div>
   </div>
+
+<h2 style="text-align:center; color: #ea6a1f; margin-top: 60px;">Our Guests</h2>
+<div class="quote-container">
+
+  <!-- Jackie -->
+  <div class="quote-box">
+    <img src="https://aceofclubs.netlify.app/assets/jackie.jpeg" alt="Jackie photo">
+    <div>
+      <p class="quote-text">“I always feel valued at Ace of Clubs. It’s really improved my self-esteem and helped me feel so much more confident as an individual.”</p>
+      <span class="quote-name">JACKIE</span>
+    </div>
+  </div>
+
+  <!-- Jennifer -->
+  <div class="quote-box">
+    <img src="https://aceofclubs.netlify.app/assets/jennifer.jpg" alt="Jennifer photo">
+    <div>
+      <p class="quote-text">“Ace of Clubs provides everything you need to live, the staff are really helpful and I’ve made a lot of friends here over the years as well.”</p>
+      <span class="quote-name">JENNIFER</span>
+    </div>
+  </div>
+
+</div>
+
   
 </div>
 
