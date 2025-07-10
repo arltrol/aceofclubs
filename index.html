@@ -393,6 +393,20 @@
   margin-top: 40px;
 }
 
+  .quote-container.two-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .quote-container.two-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 @media (max-width: 768px) {
   .quote-container.four-grid {
     grid-template-columns: 1fr;
@@ -635,7 +649,7 @@
 
 
 <h2 style="text-align:center; color: #ea6a1f; margin-top: 60px;">Our Guests</h2>
-<div class="quote-container">
+<div class="quote-container two-grid">
 
   <!-- Jackie -->
   <div class="quote-box">
