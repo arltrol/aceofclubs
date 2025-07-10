@@ -1,0 +1,136 @@
+<!-- volunteer-form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Application - Ace of Clubs</title>
+  <link rel="stylesheet" href="/styles.css" /> <!-- Optional: external CSS if needed -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f3;
+      color: #222;
+    }
+    header, footer, .hero-slideshow, nav, .donate-button, .logo-text { display: none; } /* Hide default homepage elements */
+    .form-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #ea6a1f;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .checkbox-label {
+      display: block;
+      font-weight: normal;
+      margin: 8px 0;
+    }
+    button {
+      background-color: #ea6a1f;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #ea6a1f;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <a class="back-link" href="/">← Back to Ace of Clubs</a>
+    <h1>Volunteer Application Form</h1>
+
+    <form name="volunteer-form" method="POST" data-netlify="true">
+      <h2>Your Contact Details</h2>
+      <label>Full Name<input type="text" name="full_name" required></label>
+      <label>Full Address (incl. postcode)<input type="text" name="address" required></label>
+      <label>Telephone<input type="text" name="telephone"></label>
+      <label>Mobile<input type="text" name="mobile"></label>
+      <label>Email<input type="email" name="email" required></label>
+      <label><input type="checkbox" name="over_18" required> I confirm I am over 18 years old</label>
+
+      <h2>About You</h2>
+      <label>What previous work or volunteering experience do you have?<textarea name="experience" rows="4"></textarea></label>
+      <label>What attracts you to volunteering with Ace of Clubs?<textarea name="motivation" rows="4"></textarea></label>
+      <label>Do you have skills that could benefit our centre? (e.g. educational, gardening, IT)<textarea name="skills" rows="3"></textarea></label>
+
+      <h2>Availability</h2>
+      <label>How long can you volunteer with us?</label>
+      <label class="checkbox-label"><input type="radio" name="duration" value="0-6 months" required> 0 - 6 Months</label>
+      <label class="checkbox-label"><input type="radio" name="duration" value="6-12 months"> 6 - 12 Months</label>
+      <label class="checkbox-label"><input type="radio" name="duration" value="12+ months"> 12+ Months</label>
+
+      <label>How many shifts per week can you commit to?<input type="number" name="shifts_per_week" min="1" max="5" required></label>
+
+      <label>Which days are you available?</label>
+      <label class="checkbox-label"><input type="checkbox" name="days" value="Monday"> Monday</label>
+      <label class="checkbox-label"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+      <label class="checkbox-label"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+      <label class="checkbox-label"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+      <label class="checkbox-label"><input type="checkbox" name="days" value="Friday"> Friday</label>
+
+      <h2>Equal Opportunities</h2>
+      <label>Please share any disabilities, health needs or adjustments we should be aware of:<textarea name="equal_opportunities" rows="3"></textarea></label>
+
+      <h2>DBS Check</h2>
+      <p>A basic DBS check is required. If you already have one from the past 3 years, please let us know below. If the £21.50 cost is prohibitive, contact us.</p>
+      <label>Do you have a current DBS? <textarea name="dbs_info" rows="2"></textarea></label>
+
+      <h2>References</h2>
+      <label>Referee 1 Name<input type="text" name="ref1_name" required></label>
+      <label>Referee 1 Company & Address<input type="text" name="ref1_address" required></label>
+      <label>Referee 1 Email<input type="email" name="ref1_email" required></label>
+      <label>Referee 1 Telephone<input type="text" name="ref1_phone"></label>
+      <label>Referee 1 Relationship to you<input type="text" name="ref1_relation"></label>
+
+      <label>Referee 2 Name<input type="text" name="ref2_name" required></label>
+      <label>Referee 2 Company & Address<input type="text" name="ref2_address" required></label>
+      <label>Referee 2 Email<input type="email" name="ref2_email" required></label>
+      <label>Referee 2 Telephone<input type="text" name="ref2_phone"></label>
+      <label>Referee 2 Relationship to you<input type="text" name="ref2_relation"></label>
+
+      <h2>Emergency Contact</h2>
+      <label>Name<input type="text" name="emergency_name" required></label>
+      <label>Relationship<input type="text" name="emergency_relation"></label>
+      <label>Telephone<input type="text" name="emergency_phone"></label>
+      <label>Mobile<input type="text" name="emergency_mobile"></label>
+
+      <h2>Data Protection</h2>
+      <p>We comply with the Data Protection Act 2018. Your data will be held securely and only accessed by authorised staff.</p>
+      <label><input type="checkbox" name="data_consent" required> I consent to Ace of Clubs confidentially storing my data</label>
+
+      <h2>Declaration</h2>
+      <label>I declare that the information provided is true</label>
+      <label>Signed<input type="text" name="signed" required></label>
+      <label>Date<input type="date" name="signed_date" required></label>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </div>
+</body>
+</html>
