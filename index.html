@@ -506,7 +506,20 @@ body.dark .quote-text {
   color: #f5f5f5 !important;
 }
 
-  
+  .desktop-dark-toggle {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-dark-toggle {
+    display: none;
+  }
+}
+
+  body.dark .mobile-nav {
+  background: #2b2b2b;
+  border-color: #444;
+}
 </style>
 
 </head>
@@ -528,8 +541,9 @@ body.dark .quote-text {
       <span class="logo-text">ACE OF CLUBS</span>
     </div>
 
-    <button onclick="toggleDarkMode()" style="background:none;border:none;font-size:1.2em;cursor:pointer;color:#ea6a1f;">🌙</button>
-
+<div class="desktop-dark-toggle">
+  <button onclick="toggleDarkMode()" style="background:none;border:none;font-size:1.2em;cursor:pointer;color:#ea6a1f;">🌙</button>
+</div>
     
     <nav>
       <a href="#about">About</a>
