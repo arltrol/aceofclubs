@@ -386,6 +386,20 @@
   margin-top: 40px;
 }
 
+  .quote-container.four-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .quote-container.four-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .quote-box {
   max-width: 480px;
   background: white;
