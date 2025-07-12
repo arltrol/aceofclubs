@@ -1,10 +1,10 @@
-const OpenAI = require("openai");
+import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Set this in Netlify dashboard
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
-exports.handler = async function (event) {
+export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Only POST allowed" };
   }
@@ -53,4 +53,4 @@ exports.handler = async function (event) {
       body: JSON.stringify({ error: error.message }),
     };
   }
-};
+}
