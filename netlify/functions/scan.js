@@ -10,7 +10,7 @@ exports.handler = async function (event) {
   }
 
   try {
-    const { imageBase64 } = JSON.parse(event.body);
+    const { imageUrl } = JSON.parse(event.body);
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -24,7 +24,7 @@ exports.handler = async function (event) {
             },
             {
               type: "image_url",
-              image_url: { url: "https://i.imgur.com/lZKvFMM.jpeg" }, // fixed
+              image_url: { url: imageUrl },
             },
           ],
         },
@@ -33,13 +33,10 @@ exports.handler = async function (event) {
 
     const text = response.choices[0].message.content;
 
-    console.log("GPT-4o raw response:", text);
-
     let parsed;
     try {
       parsed = JSON.parse(text);
     } catch (err) {
-      console.error("Could not parse GPT response as JSON:", text);
       return {
         statusCode: 500,
         body: JSON.stringify({ error: "Invalid JSON from GPT", raw: text }),
@@ -51,7 +48,6 @@ exports.handler = async function (event) {
       body: JSON.stringify({ names: parsed }),
     };
   } catch (error) {
-    console.error("Error in scan function:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
