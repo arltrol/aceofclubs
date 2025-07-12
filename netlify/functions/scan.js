@@ -18,7 +18,10 @@ exports.handler = async function (event) {
         {
           role: "user",
           content: [
-            { type: "text", text: "Extract the handwritten names from this registration form image. Return them as a clean JSON array of names." },
+            {
+              type: "text",
+              text: `You are a helpful assistant. The user has uploaded a photo of a paper registration form used for sign-ins. Your task is to extract only the handwritten full names (first and last if available). Return just the list of names as a JSON array, nothing else. Example: ["Jane Smith", "John Doe", "Ella K."]`,
+            },
             {
               type: "image_url",
               image_url: { url: imageBase64 },
@@ -29,11 +32,16 @@ exports.handler = async function (event) {
     });
 
     const text = response.choices[0].message.content;
+
+    // Optional: log for debugging
+    console.log("GPT-4o raw response:", text);
+
     return {
       statusCode: 200,
       body: JSON.stringify({ names: JSON.parse(text) }),
     };
   } catch (error) {
+    console.error("Error in scan function:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
