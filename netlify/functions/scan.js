@@ -31,21 +31,21 @@ export async function handler(event) {
       ],
     });
 
-    const text = response.choices[0].message.content;
+    const raw = response.choices[0].message.content;
+    let names;
 
-    let parsed;
     try {
-      parsed = JSON.parse(text);
+      names = JSON.parse(raw);
     } catch (err) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "Invalid JSON from GPT", raw: text }),
+        body: JSON.stringify({ error: "Failed to parse GPT response", raw }),
       };
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ names: parsed }),
+      body: JSON.stringify({ names }),
     };
   } catch (error) {
     return {
