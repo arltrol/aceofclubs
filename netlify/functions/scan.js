@@ -23,8 +23,8 @@ exports.handler = async function (event) {
               text: `You are a helpful assistant. The user has uploaded a photo of a paper registration form used for sign-ins. Your task is to extract only the handwritten full names (first and last if available). Return just the list of names as a JSON array, nothing else. Example: ["Jane Smith", "John Doe", "Ella K."]`,
             },
             {
-              type: "image_url",
-              image_url: { url: imageBase64 },
+               type: "image_url",
+              image_url: { url: "https://i.imgur.com/XxYyZzA.png" },
             },
           ],
         },
