@@ -1,8 +1,4 @@
-No forget this. 
-
-I am pretty sure i have access to the 4o or 4o mini, so let's get back to the HTML for the scanner and what I need todo exactly to configure the netlify backend etc
-
-the code you gave so far:<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -58,11 +54,15 @@ the code you gave so far:<!DOCTYPE html>
       });
     }
 
-    async function fakeOCR(base64) {
-      // This should be replaced with a backend or OpenAI Vision API call
-      // For now we simulate it with fake names
-      return ["Jennifer", "Kenna", "MARCY", "Richard Brown"];
-    }
+  async function fakeOCR(base64) {
+  const response = await fetch("/.netlify/functions/scan", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageBase64: base64 }),
+  });
+  const result = await response.json();
+  return result.names || [];
+}
 
     function renderEditableFields(names) {
       const container = document.getElementById('output');
