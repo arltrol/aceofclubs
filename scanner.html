@@ -67,16 +67,25 @@
       return data.data.url;
     }
 
-    async function fetchNamesFromScan(imageUrl) {
-      const response = await fetch("/.netlify/functions/scan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageUrl }),
-      });
+   async function fetchNamesFromScan(imageUrl) {
+  const response = await fetch("/.netlify/functions/scan", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageUrl }),
+  });
 
-      const result = await response.json();
-      return result.names || [];
-    }
+  const result = await response.json();
+
+  // ✅ DEBUG if GPT fails or returns bad JSON
+  if (response.status !== 200) {
+    console.error("⚠️ AI scan error:", result.error || result.raw || "Unknown error");
+    alert("AI scan failed. Check the browser console for details.");
+    return [];
+  }
+
+  return result.names || [];
+}
+
 
     function renderEditableFields(names) {
       const container = document.getElementById('output');
