@@ -1,0 +1,99 @@
+No forget this. 
+
+I am pretty sure i have access to the 4o or 4o mini, so let's get back to the HTML for the scanner and what I need todo exactly to configure the netlify backend etc
+
+the code you gave so far:<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AceOfClubs Registration Form Scanner</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #fff8f3; }
+    h1 { color: #333; text-align: center; }
+    #logo { max-width: 150px; display: block; margin: 0 auto 1rem; }
+    input[type="file"] { display: block; margin: 1rem auto; }
+    .name-field { margin: 0.25rem auto; display: block; width: 90%; max-width: 400px; padding: 0.5rem; font-size: 1rem; }
+    #output { margin-top: 2rem; text-align: center; }
+    button { margin: 1rem 0.5rem; padding: 0.6rem 1rem; font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <img id="logo" src="e82df307-1b38-4691-be26-ac18d260e4c5.png" alt="Ace of Clubs logo">
+  <h1>AceOfClubs Registration Form Scanner</h1>
+  <input type="file" accept="image/*" multiple id="imageInput" />
+  <div id="output"></div>
+  <div id="actions" style="text-align:center; display:none;">
+    <button onclick="downloadExcel()">Download Excel</button>
+    <input type="email" id="emailInput" placeholder="Or enter email to send Excel" style="padding:0.5rem; width: 250px;">
+    <button onclick="sendEmail()">Send to Email</button>
+  </div>
+
+  <script>
+    let editableNames = [];
+
+    document.getElementById('imageInput').addEventListener('change', async function(event) {
+      const files = event.target.files;
+      const output = document.getElementById('output');
+      output.innerHTML = '<p><em>Processing images with AI...</em></p>';
+      editableNames = [];
+
+      for (let file of files) {
+        const base64 = await toBase64(file);
+
+        // Simulate AI OCR via GPT or other backend (here mocked)
+        const names = await fakeOCR(base64); // replace this with actual OpenAI call
+        editableNames.push(...names);
+      }
+
+      renderEditableFields(editableNames);
+    });
+
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function fakeOCR(base64) {
+      // This should be replaced with a backend or OpenAI Vision API call
+      // For now we simulate it with fake names
+      return ["Jennifer", "Kenna", "MARCY", "Richard Brown"];
+    }
+
+    function renderEditableFields(names) {
+      const container = document.getElementById('output');
+      container.innerHTML = '<h2>Review Names</h2>';
+      names.forEach((name, i) => {
+        container.innerHTML += <input class="name-field" type="text" value="${name}" id="name-${i}" />;
+      });
+      document.getElementById('actions').style.display = 'block';
+    }
+
+    function downloadExcel() {
+      const data = [['Sign-in Name']];
+      editableNames.forEach((_, i) => {
+        const value = document.getElementById(name-${i}).value;
+        data.push([value]);
+      });
+      const csvContent = data.map(e => e.join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "AceOfClubs_SignIn.csv");
+      document.body.appendChild(link);
+      link.click();
+    }
+
+    function sendEmail() {
+      const email = document.getElementById('emailInput').value;
+      alert(This would email the Excel to ${email} (requires backend function));
+      // Here you would call a Netlify Function or API with email + CSV file
+    }
+  </script>
+</body>
+</html>
