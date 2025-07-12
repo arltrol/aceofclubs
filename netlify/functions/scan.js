@@ -20,7 +20,11 @@ export async function handler(event) {
           content: [
             {
               type: "text",
-              text: `You are a helpful assistant. The user has uploaded a photo of a paper registration form used for sign-ins. Your task is to extract only the handwritten full names (first and last if available). Return just the list of names as a JSON array, nothing else. Example: ["Jane Smith", "John Doe", "Ella K."]`,
+              text: `You are a helpful assistant. The user has uploaded a photo of a paper registration form. Your job is to extract only the handwritten full names (first and last if available). 
+
+Return only a raw JSON array, with no explanation, no markdown, and no surrounding text.
+
+Example output: ["Jane Smith", "John Doe", "Ella K."]`,
             },
             {
               type: "image_url",
@@ -34,13 +38,33 @@ export async function handler(event) {
     const raw = response.choices[0].message.content;
     let names;
 
+    // Try to parse raw JSON
     try {
       names = JSON.parse(raw);
     } catch (err) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "Failed to parse GPT response", raw }),
-      };
+      // Fallback: try to extract a JSON array from surrounding text
+      const match = raw.match(/\[[^\]]+\]/s); // matches first [...] block
+      if (match) {
+        try {
+          names = JSON.parse(match[0]);
+        } catch (e) {
+          return {
+            statusCode: 500,
+            body: JSON.stringify({
+              error: "Failed to parse array in GPT fallback",
+              raw,
+            }),
+          };
+        }
+      } else {
+        return {
+          statusCode: 500,
+          body: JSON.stringify({
+            error: "Failed to parse GPT response",
+            raw,
+          }),
+        };
+      }
     }
 
     return {
