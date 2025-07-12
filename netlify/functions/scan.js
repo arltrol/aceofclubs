@@ -24,7 +24,7 @@ exports.handler = async function (event) {
             },
             {
                type: "image_url",
-              image_url: { url: "https://i.imgur.com/XxYyZzA.png" },
+              image_url: { url: "https://i.imgur.com/lZKvFMM.jpeg" },
             },
           ],
         },
