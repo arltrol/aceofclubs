@@ -27,6 +27,7 @@
       <button onclick="saveAndContinue()">Save and scan next photo</button>
       <button onclick="finishSession()">Finished scanning</button>
     </div>
+    <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
   </div>
 
   <div id="summary" style="display:none;"></div>
@@ -109,6 +110,7 @@
         if (name) {
           await saveToSheet(name, input.dataset.filename);
           allNames.push(name);
+          document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
         }
       }
       document.getElementById('output').innerHTML = '';
