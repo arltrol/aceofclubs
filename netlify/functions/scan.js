@@ -23,8 +23,8 @@ exports.handler = async function (event) {
               text: `You are a helpful assistant. The user has uploaded a photo of a paper registration form used for sign-ins. Your task is to extract only the handwritten full names (first and last if available). Return just the list of names as a JSON array, nothing else. Example: ["Jane Smith", "John Doe", "Ella K."]`,
             },
             {
-               type: "image_url",
-              image_url: { url: "https://i.imgur.com/lZKvFMM.jpeg" },
+              type: "image_url",
+              image_url: { url: "https://i.imgur.com/lZKvFMM.jpeg" }, // fixed
             },
           ],
         },
@@ -33,12 +33,22 @@ exports.handler = async function (event) {
 
     const text = response.choices[0].message.content;
 
-    // Optional: log for debugging
     console.log("GPT-4o raw response:", text);
+
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (err) {
+      console.error("Could not parse GPT response as JSON:", text);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Invalid JSON from GPT", raw: text }),
+      };
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ names: JSON.parse(text) }),
+      body: JSON.stringify({ names: parsed }),
     };
   } catch (error) {
     console.error("Error in scan function:", error);
