@@ -36,9 +36,7 @@
 
       for (let file of files) {
         const base64 = await toBase64(file);
-
-        // Simulate AI OCR via GPT or other backend (here mocked)
-        const names = await fakeOCR(base64); // replace this with actual OpenAI call
+        const names = await fakeOCR(base64); // Replace with real backend call
         editableNames.push(...names);
       }
 
@@ -54,21 +52,21 @@
       });
     }
 
-  async function fakeOCR(base64) {
-  const response = await fetch("/.netlify/functions/scan", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ imageBase64: base64 }),
-  });
-  const result = await response.json();
-  return result.names || [];
-}
+    async function fakeOCR(base64) {
+      const response = await fetch("/.netlify/functions/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageBase64: base64 }),
+      });
+      const result = await response.json();
+      return result.names || [];
+    }
 
     function renderEditableFields(names) {
       const container = document.getElementById('output');
       container.innerHTML = '<h2>Review Names</h2>';
       names.forEach((name, i) => {
-        container.innerHTML += <input class="name-field" type="text" value="${name}" id="name-${i}" />;
+        container.innerHTML += `<input class="name-field" type="text" value="${name}" id="name-${i}" />`;
       });
       document.getElementById('actions').style.display = 'block';
     }
@@ -76,7 +74,7 @@
     function downloadExcel() {
       const data = [['Sign-in Name']];
       editableNames.forEach((_, i) => {
-        const value = document.getElementById(name-${i}).value;
+        const value = document.getElementById(`name-${i}`).value;
         data.push([value]);
       });
       const csvContent = data.map(e => e.join(",")).join("\n");
@@ -91,8 +89,7 @@
 
     function sendEmail() {
       const email = document.getElementById('emailInput').value;
-      alert(This would email the Excel to ${email} (requires backend function));
-      // Here you would call a Netlify Function or API with email + CSV file
+      alert(`This would email the Excel to ${email} (requires backend function)`);
     }
   </script>
 </body>
