@@ -1,13 +1,13 @@
 // /netlify/functions/submit-to-sheet.js
 
-export async function handler(event) {
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+exports.handler = async function(event) {
   const targetUrl = "https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec";
 
   try {
-    // Parse JSON body first
     const data = JSON.parse(event.body);
 
-    // Convert to URL-encoded form
     const formData = new URLSearchParams();
     for (let key in data) {
       formData.append(key, data[key]);
@@ -22,7 +22,8 @@ export async function handler(event) {
     });
 
     const text = await googleResponse.text();
-console.log("Raw Google Sheet response:", text); // ← add this
+    console.log("Raw Google Sheet response:", text);
+
     return {
       statusCode: 200,
       body: text,
@@ -35,7 +36,7 @@ console.log("Raw Google Sheet response:", text); // ← add this
   } catch (err) {
     return {
       statusCode: 500,
-      body: Failed to forward: ${err.message}
+      body: `Failed to forward: ${err.message}`
     };
   }
-}
+};
