@@ -8,7 +8,7 @@
     body { font-family: sans-serif; padding: 1rem; background: #fff8f3; }
     h1, h2 { text-align: center; }
     #logo { max-width: 80px; display: block; margin: 0 auto 1rem; }
-    .input-field, .name-field {
+    .input-field {
       display: block;
       margin: 0.5rem auto;
       width: 90%;
@@ -16,24 +16,11 @@
       padding: 1rem;
       font-size: 1.4rem;
     }
-    #start-session-button {
+    #start-session-button, button {
       display: block;
       margin: 1rem auto;
       padding: 0.8rem 1.4rem;
       font-size: 1.2rem;
-      cursor: pointer;
-    }
-    #imageInput {
-      display: none;
-      margin: 2rem auto;
-      font-size: 1.2rem;
-      padding: 1rem;
-    }
-    #output, #summary { margin-top: 2rem; text-align: center; }
-    button {
-      margin: 1rem 0.5rem;
-      padding: 0.6rem 1rem;
-      font-size: 1rem;
       cursor: pointer;
     }
     .spinner {
@@ -49,6 +36,7 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    #output, #recordCount, #sheetLink, #finalNames { text-align: center; }
   </style>
 </head>
 <body>
@@ -59,35 +47,25 @@
   <button id="start-session-button" onclick="startSession()">Start New Session</button>
 
   <div id="scannerArea" style="display:none;">
-    <input type="file" accept="image/*" id="imageInput" style="display: block;" />
+    <input type="file" accept="image/*" id="imageInput" />
   </div>
 
   <div id="output"></div>
-
-  <div id="saveControls" style="display:none; text-align:center;">
-    <button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>
-    <div id="saveSpinner" class="spinner" style="display:none;"></div>
+  <div id="saveSpinner" class="spinner" style="display:none;"></div>
+  <p id="recordCount" style="font-weight:bold;"></p>
+  <div id="finalNames"></div>
+  <p id="sheetLink" style="display:none;">
+    Google Sheet Link: <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing" target="_blank">View in Google Sheets</a>
+  </p>
+  <div id="nextLink" style="text-align:center; display:none;">
+    <a href="https://aceofclubs.netlify.app/scanner3.html"><button>Scan Another Form</button></a>
   </div>
-
-  <div id="postSaveControls" style="display:none; text-align:center;">
-    <button onclick="scanAnother()">Scan another photo</button>
-    <button onclick="endSession()">All done</button>
-  </div>
-
-  <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
-  <p id="sheetLink" style="text-align:center; display:none;">
-  Google Sheet Link: 
-  <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing"
-     target="_blank" rel="noopener noreferrer">
-     View in Google Sheets
-  </a>
-</p>
-  <div id="summary" style="display:none;"></div>
 
   <script>
     let sessionId = '';
     let operatorName = '';
     let allNames = [];
+    let filename = '';
 
     function startSession() {
       operatorName = document.getElementById('operatorInput').value.trim();
@@ -99,16 +77,16 @@
     document.getElementById('imageInput').addEventListener('change', async function(event) {
       const file = event.target.files[0];
       if (!file) return;
-
+      this.disabled = true;
       const output = document.getElementById('output');
-      output.innerHTML = '<div class="spinner"></div>'; // Show spinner
+      output.innerHTML = '<div class="spinner"></div>';
+      filename = file.name;
 
       try {
         const base64 = await resizeImage(file);
         const imageUrl = await uploadToImgbb(base64);
         const names = await fetchNamesFromScan(imageUrl);
-        renderEditableFields(names, file.name);
-        document.getElementById('saveControls').style.display = 'block';
+        renderEditableFields(names, filename);
       } catch (err) {
         output.innerHTML = `<p style="color:red;">Scan failed. ${err.message}</p>`;
       }
@@ -147,57 +125,55 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl }),
       });
-
       const result = await response.json();
-      if (response.status !== 200) {
-        console.error("Scan error:", result.error || result.raw);
-        alert("Scan failed. Check console.");
-        return [];
-      }
-
+      if (response.status !== 200) throw new Error("Scan failed.");
       return result.names || [];
     }
 
     function renderEditableFields(names, filename) {
       const output = document.getElementById('output');
       output.innerHTML = `<h2>Edit Names from ${filename}</h2>`;
-      names.forEach((name, i) => {
+      names.forEach(name => {
         output.innerHTML += `<input class="name-field" type="text" value="${name}" data-filename="${filename}" />`;
       });
+      output.innerHTML += `<button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>`;
     }
 
     async function saveResultsToSheet() {
       const inputs = document.querySelectorAll('.name-field');
       const saveSpinner = document.getElementById('saveSpinner');
+      document.body.innerHTML = '';  // Reset everything
+      document.body.appendChild(saveSpinner);
       saveSpinner.style.display = 'block';
-      let savedCount = 0;
+
+      const recordCount = document.createElement('p');
+      recordCount.id = 'recordCount';
+      document.body.appendChild(recordCount);
+
+      const finalNames = document.createElement('div');
+      finalNames.id = 'finalNames';
+      document.body.appendChild(finalNames);
 
       for (let input of inputs) {
         const name = input.value.trim();
         if (name) {
-          await saveToSheet(name, input.dataset.filename);
+          await saveToSheet(name, filename);
           allNames.push(name);
-          savedCount++;
-          document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
+          recordCount.innerText = `${allNames.length} name(s) saved so far...`;
+          finalNames.innerHTML += `<p>${name}</p>`;
         }
       }
 
       saveSpinner.style.display = 'none';
-      document.getElementById('saveControls').style.display = 'none';
-      document.getElementById('postSaveControls').style.display = 'block';
-      document.getElementById('sheetLink').style.display = 'block';
-    }
 
-    function scanAnother() {
-      document.getElementById('output').innerHTML = '';
-      document.getElementById('imageInput').value = '';
-      document.getElementById('saveControls').style.display = 'none';
-      document.getElementById('postSaveControls').style.display = 'none';
-      document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
-    }
+      // Google sheet link
+      const sheetLink = document.createElement('p');
+      sheetLink.innerHTML = `Google Sheet Link: <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing" target="_blank">View in Google Sheets</a>`;
+      document.body.appendChild(sheetLink);
 
-    function endSession() {
-      document.body.innerHTML = '<h1 style="text-align:center; padding-top:3rem;">Thank you, scan again one day!</h1>';
+      const nextBtn = document.createElement('div');
+      nextBtn.innerHTML = `<a href="https://aceofclubs.netlify.app/scanner3.html"><button>Scan Another Form</button></a>`;
+      document.body.appendChild(nextBtn);
     }
 
     async function saveToSheet(name, filename) {
@@ -208,15 +184,11 @@
         image: filename,
         timestamp: new Date().getTime()
       };
-
       const res = await fetch("/.netlify/functions/submit-to-sheet", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       const text = await res.text();
       console.log("Sheet response:", text);
     }
