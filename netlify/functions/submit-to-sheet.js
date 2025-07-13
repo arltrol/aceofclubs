@@ -3,7 +3,7 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 exports.handler = async function(event) {
-  const targetUrl = "https://script.google.com/macros/s/AKfycbwkX0eBE2uhg1Hh6IbF-LK_DY0mFAOTUjAZHzJj2SUfDglWgNF_w3flRcKMo4026dk3/exec";
+  const targetUrl = "https://script.google.com/macros/s/AKfycbzdZ2NpXCOAg3YVaxVaa7YaVvvZtWP9d5ZBGhhFlAc5bu0VfN6z787ZBd0hB6QjVuA/exec";
 
   try {
     const data = JSON.parse(event.body);
