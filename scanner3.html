@@ -75,13 +75,6 @@
   </div>
 
   <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
-  <p id="sheetLink" style="text-align:center; display:none;">
-  Google Sheet Link: 
-  <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing"
-     target="_blank" rel="noopener noreferrer">
-     View in Google Sheets
-  </a>
-</p>
   <div id="summary" style="display:none;"></div>
 
   <script>
@@ -185,7 +178,6 @@
       saveSpinner.style.display = 'none';
       document.getElementById('saveControls').style.display = 'none';
       document.getElementById('postSaveControls').style.display = 'block';
-      document.getElementById('sheetLink').style.display = 'block';
     }
 
     function scanAnother() {
