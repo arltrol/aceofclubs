@@ -133,7 +133,7 @@
       payload.append("image", filename);
       payload.append("timestamp", new Date().getTime());
 
-      const res = await fetch("https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec", {
+    const res = await fetch("/.netlify/functions/submit-to-sheet", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
