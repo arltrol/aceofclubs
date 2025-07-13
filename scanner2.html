@@ -118,28 +118,35 @@
       document.getElementById('imageInput').value = '';
     }
 
-    function finishSession() {
-      document.getElementById('summary').innerHTML =
-        `<h2>Session Complete</h2><p><strong>${allNames.length}</strong> names saved</p><ul>${allNames.map(n => `<li>${n}</li>`).join('')}</ul>`;
-      document.getElementById('summary').style.display = 'block';
-      document.getElementById('scannerArea').style.display = 'none';
-    }
+async function finishSession() {
+  await saveAndContinue(); // Ensure names are saved first
+  document.getElementById('summary').innerHTML =
+    `<h2>Session Complete</h2><p><strong>${allNames.length}</strong> names saved</p><ul>${allNames.map(n => `<li>${n}</li>`).join('')}</ul>`;
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('scannerArea').style.display = 'none';
+}
 
-    async function saveToSheet(name, filename) {
-      const payload = {
-        name,
-        operator: operatorName,
-        session: sessionId,
-        image: filename,
-        timestamp: new Date().toISOString()
-      };
-    await fetch("https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(payload),
-});
+    
+
+  async function saveToSheet(name, filename) {
+  const payload = {
+    name,
+    operator: operatorName,
+    session: sessionId,
+    image: filename,
+    timestamp: new Date().toISOString()
+  };
+  console.log("Saving to sheet:", payload); // Add this
+  const res = await fetch("https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload),
+  });
+  console.log("Sheet response:", await res.text()); // And this
+}
+
 
       
     }
