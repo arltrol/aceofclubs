@@ -89,12 +89,14 @@
     let operatorName = '';
     let allNames = [];
 
-    function startSession() {
-      operatorName = document.getElementById('operatorInput').value.trim();
-      if (!operatorName) return alert("Enter your name");
-      sessionId = 'sess_' + Date.now();
-      document.getElementById('scannerArea').style.display = 'block';
-    }
+  function startSession() {
+  operatorName = document.getElementById('operatorInput').value.trim();
+  if (!operatorName) return alert("Enter your name");
+  sessionId = 'sess_' + Date.now();
+  document.getElementById('scannerArea').style.display = 'block';
+  document.getElementById('operatorInput').style.display = 'none'; // hide after start
+}
+
 
     document.getElementById('imageInput').addEventListener('change', async function(event) {
       const file = event.target.files[0];
@@ -188,13 +190,20 @@
       document.getElementById('sheetLink').style.display = 'block';
     }
 
-    function scanAnother() {
-      document.getElementById('output').innerHTML = '';
-      document.getElementById('imageInput').value = '';
-      document.getElementById('saveControls').style.display = 'none';
-      document.getElementById('postSaveControls').style.display = 'none';
-      document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
-    }
+  function scanAnother() {
+  document.getElementById('output').innerHTML = '';
+  document.getElementById('imageInput').value = '';
+  document.getElementById('saveControls').style.display = 'none';
+  document.getElementById('postSaveControls').style.display = 'none';
+  document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
+  
+  // Keep scanner area visible
+  document.getElementById('scannerArea').style.display = 'block';
+  
+  // Hide the start session button so it's not shown again
+  document.getElementById('start-session-button').style.display = 'none';
+}
+
 
     function endSession() {
       document.body.innerHTML = '<h1 style="text-align:center; padding-top:3rem;">Thank you, scan again one day!</h1>';
