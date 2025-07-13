@@ -44,9 +44,9 @@
     <button id="startBtn">Start New Session</button>
   </div>
 
-  <div id="uploadSection" class="hidden">
-    <input type="file" id="imageInput" accept="image/*" />
-  </div>
+  <form name="scan-form" id="scan-form" class="hidden">
+    <input type="file" id="imageInput" name="image" accept="image/*" required />
+  </form>
 
   <div id="spinner" class="hidden">
     <p>⏳ Scanning, please wait...</p>
@@ -70,7 +70,6 @@
 
   <p id="finalMessage" class="hidden" style="margin-top: 20px; font-weight: bold;">All done – bye bye 👋</p>
 
-  <script src="scan2.js"></script>
   <script>
     let sessionId = '';
     let operator = '';
@@ -80,7 +79,7 @@
       operator = document.getElementById('operator').value.trim();
       if (!operator) return alert('Please enter your name first.');
       sessionId = `session-${Date.now()}`;
-      document.getElementById('uploadSection').classList.remove('hidden');
+      document.getElementById('scan-form').classList.remove('hidden');
     });
 
     document.getElementById('imageInput').addEventListener('change', async function () {
@@ -92,20 +91,23 @@
         const base64Image = reader.result.split(',')[1];
 
         document.getElementById('spinner').classList.remove('hidden');
+
         const response = await fetch('/.netlify/functions/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name: operator,
             session: sessionId,
-            image: base64Image
+            image: base64Image,
+            operator: operator,
+            timestamp: Date.now()
           })
         });
 
         const result = await response.json();
         document.getElementById('spinner').classList.add('hidden');
 
-        if (result.rows && result.rows.length) {
+        if (result && result.rows && result.rows.length) {
           scannedRows = result.rows;
           const container = document.getElementById('resultsContainer');
           container.innerHTML = '<h3>Scan Results</h3><ul>' +
