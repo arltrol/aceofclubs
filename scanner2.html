@@ -11,6 +11,21 @@
     .input-field, .name-field { display: block; margin: 0.5rem auto; width: 90%; max-width: 400px; padding: 0.5rem; font-size: 1rem; }
     #output, #summary { margin-top: 2rem; text-align: center; }
     button { margin: 1rem 0.5rem; padding: 0.6rem 1rem; font-size: 1rem; cursor: pointer; }
+    .spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #f97316;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 2rem auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
   </style>
 </head>
 <body>
@@ -37,6 +52,20 @@
     let operatorName = '';
     let allNames = [];
 
+    async function ensureImageAvailable(url, retries = 3, delay = 1000) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await fetch(url, { method: 'GET' });
+      if (!res.ok) throw new Error(`Status: ${res.status}`);
+      return true;
+    } catch (err) {
+      if (i === retries) throw err;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
+
     function startSession() {
       operatorName = document.getElementById('operatorInput').value.trim();
       if (!operatorName) return alert("Enter your name");
@@ -44,14 +73,23 @@
       document.getElementById('scannerArea').style.display = 'block';
     }
 
-    document.getElementById('imageInput').addEventListener('change', async function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const base64 = await resizeImage(file);
-      const imageUrl = await uploadToImgbb(base64);
-      const names = await fetchNamesFromScan(imageUrl);
-      renderEditableFields(names, file.name);
-    });
+   document.getElementById('imageInput').addEventListener('change', async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const output = document.getElementById('output');
+  output.innerHTML = '<div class="spinner"></div>'; // Show spinner
+
+  try {
+    const base64 = await resizeImage(file);
+    const imageUrl = await uploadToImgbb(base64);
+    const names = await fetchNamesFromScan(imageUrl);
+    renderEditableFields(names, file.name);
+  } catch (err) {
+    output.innerHTML = `<p style="color:red;">Scan failed. ${err.message}</p>`;
+  }
+});
+
 
     function resizeImage(file) {
       return new Promise((resolve) => {
@@ -81,19 +119,30 @@
     }
 
     async function fetchNamesFromScan(imageUrl) {
-      const response = await fetch("/.netlify/functions/scan2", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageUrl }),
-      });
-      const result = await response.json();
-      if (response.status !== 200) {
-        console.error("Scan error:", result.error || result.raw);
-        alert("Scan failed. Check console.");
-        return [];
-      }
-      return result.names || [];
-    }
+  try {
+    await ensureImageAvailable(imageUrl); // ⏳ wait until image is fetchable
+  } catch (err) {
+    console.error("Image not ready after retries:", err.message);
+    alert("Image was not ready yet. Please try again.");
+    return [];
+  }
+
+  const response = await fetch("/.netlify/functions/scan2", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageUrl }),
+  });
+
+  const result = await response.json();
+  if (response.status !== 200) {
+    console.error("Scan error:", result.error || result.raw);
+    alert("Scan failed. Check console.");
+    return [];
+  }
+
+  return result.names || [];
+}
+
 
     function renderEditableFields(names, filename) {
       const output = document.getElementById('output');
