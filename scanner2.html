@@ -144,7 +144,8 @@ async function finishSession() {
     },
     body: JSON.stringify(payload),
   });
-  console.log("Sheet response:", await res.text()); // And this
+const text = await res.text();
+console.log("Sheet response:", text);
 }
 
 
