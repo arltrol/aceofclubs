@@ -95,6 +95,8 @@
   sessionId = 'sess_' + Date.now();
   document.getElementById('scannerArea').style.display = 'block';
   document.getElementById('operatorInput').style.display = 'none'; // hide after start
+  document.getElementById('start-session-button').style.display = 'none';
+
 }
 
 
@@ -155,6 +157,7 @@
         console.error("Scan error:", result.error || result.raw);
         alert("Scan failed. Check console.");
         return [];
+        
       }
 
       return result.names || [];
@@ -162,7 +165,12 @@
 
     function renderEditableFields(names, filename) {
       const output = document.getElementById('output');
-      output.innerHTML = `<h2>Edit Names from ${filename}</h2>`;
+output.innerHTML = `
+  <h2>Edit Names from ${filename}</h2>
+  <p style="margin: 1rem auto; font-size: 1rem; color: #444; max-width: 420px;">
+    <em>Note: Check the names above and edit them as required before saving them.</em>
+  </p>
+`;
       names.forEach((name, i) => {
         output.innerHTML += `<input class="name-field" type="text" value="${name}" data-filename="${filename}" />`;
       });
