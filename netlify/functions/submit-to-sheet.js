@@ -4,10 +4,8 @@ export async function handler(event) {
   const targetUrl = "https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec";
 
   try {
-    // Parse JSON body first
     const data = JSON.parse(event.body);
 
-    // Convert to URL-encoded form
     const formData = new URLSearchParams();
     for (let key in data) {
       formData.append(key, data[key]);
@@ -22,6 +20,12 @@ export async function handler(event) {
     });
 
     const text = await googleResponse.text();
+    try {
+      const parsed = JSON.parse(text);
+      console.log("Sheet response:", parsed);
+    } catch (e) {
+      console.log("Sheet raw response:", text);
+    }
 
     return {
       statusCode: 200,
@@ -32,6 +36,7 @@ export async function handler(event) {
         "Content-Type": "text/plain"
       }
     };
+
   } catch (err) {
     return {
       statusCode: 500,
@@ -39,4 +44,5 @@ export async function handler(event) {
     };
   }
 }
+
 
