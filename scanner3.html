@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AceOfClubs Registration</title>
   <style>
-    body { font-family: sans-serif; padding: 1rem; background: #fff8f3; }
-    h1, h2 { text-align: center; }
+    body { font-family: sans-serif; padding: 1rem; background: #fff8f3; text-align: center; }
+    h1 { margin-bottom: 1rem; }
     #logo { max-width: 80px; display: block; margin: 0 auto 1rem; }
-    .input-field, .name-field {
+    .input-field {
       display: block;
       margin: 0.5rem auto;
       width: 90%;
@@ -16,26 +16,20 @@
       padding: 1rem;
       font-size: 1.4rem;
     }
-    #start-session-button {
+    .button {
       display: block;
       margin: 1rem auto;
       padding: 0.8rem 1.4rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
     }
     #imageInput {
       display: none;
       margin: 2rem auto;
       font-size: 1.2rem;
-      padding: 1rem;
     }
-    #output, #summary { margin-top: 2rem; text-align: center; }
-    button {
-      margin: 1rem 0.5rem;
-      padding: 0.6rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+    #output, #summary { margin-top: 2rem; }
+    #recordCount { font-weight: bold; margin-top: 1rem; }
     .spinner {
       border: 6px solid #f3f3f3;
       border-top: 6px solid #f97316;
@@ -52,29 +46,32 @@
   </style>
 </head>
 <body>
-  <img id="logo" src="https://aceofclubs.netlify.app/assets/logo.png" alt="Ace of Clubs logo">
+  <img id="logo" src="https://aceofclubs.netlify.app/assets/logo.png" alt="Ace of Clubs logo" />
   <h1>Registration Form AI Scanner</h1>
 
-  <input id="operatorInput" class="input-field" placeholder="Your name (operator)" />
-  <button id="start-session-button" onclick="startSession()">Start New Session</button>
+  <div id="loginSection">
+    <input id="operatorInput" class="input-field" placeholder="Your name (operator)" />
+    <button class="button" onclick="startSession()">Start New Session</button>
+  </div>
 
-  <div id="scannerArea" style="display:none;">
-    <input type="file" accept="image/*" id="imageInput" style="display: block;" />
+  <div id="uploadSection" style="display:none;">
+    <p id="operatorDisplay" style="font-size: 1.2rem; font-weight: bold;"></p>
+    <input type="file" accept="image/*" id="imageInput" />
   </div>
 
   <div id="output"></div>
+  <div id="spinner" class="spinner" style="display:none;"></div>
 
-  <div id="saveControls" style="display:none; text-align:center;">
-    <button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>
-    <div id="saveSpinner" class="spinner" style="display:none;"></div>
+  <div id="controls" style="display:none;">
+    <button class="button" onclick="saveToSheet()">Save this data in Google Sheets</button>
   </div>
 
-  <div id="postSaveControls" style="display:none; text-align:center;">
-    <button onclick="scanAnother()">Scan another photo</button>
-    <button onclick="endSession()">All done</button>
+  <div id="postSaveButtons" style="display:none;">
+    <button class="button" onclick="resetForNext()">Scan another photo</button>
+    <button class="button" onclick="endSession()">All done</button>
   </div>
 
-  <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
+  <p id="recordCount"></p>
   <div id="summary" style="display:none;"></div>
 
   <script>
@@ -86,7 +83,10 @@
       operatorName = document.getElementById('operatorInput').value.trim();
       if (!operatorName) return alert("Enter your name");
       sessionId = 'sess_' + Date.now();
-      document.getElementById('scannerArea').style.display = 'block';
+
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('operatorDisplay').innerText = 'Logged in as ' + operatorName;
+      document.getElementById('uploadSection').style.display = 'block';
     }
 
     document.getElementById('imageInput').addEventListener('change', async function(event) {
@@ -94,16 +94,21 @@
       if (!file) return;
 
       const output = document.getElementById('output');
-      output.innerHTML = '<div class="spinner"></div>'; // Show spinner
+      output.innerHTML = '';
+      document.getElementById('spinner').style.display = 'block';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('postSaveButtons').style.display = 'none';
 
       try {
         const base64 = await resizeImage(file);
         const imageUrl = await uploadToImgbb(base64);
         const names = await fetchNamesFromScan(imageUrl);
         renderEditableFields(names, file.name);
-        document.getElementById('saveControls').style.display = 'block';
+        document.getElementById('controls').style.display = 'block';
       } catch (err) {
         output.innerHTML = `<p style="color:red;">Scan failed. ${err.message}</p>`;
+      } finally {
+        document.getElementById('spinner').style.display = 'none';
       }
     });
 
@@ -140,14 +145,12 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl }),
       });
-
       const result = await response.json();
       if (response.status !== 200) {
         console.error("Scan error:", result.error || result.raw);
         alert("Scan failed. Check console.");
         return [];
       }
-
       return result.names || [];
     }
 
@@ -155,62 +158,56 @@
       const output = document.getElementById('output');
       output.innerHTML = `<h2>Edit Names from ${filename}</h2>`;
       names.forEach((name, i) => {
-        output.innerHTML += `<input class="name-field" type="text" value="${name}" data-filename="${filename}" />`;
+        output.innerHTML += `<input class="input-field name-field" type="text" value="${name}" data-filename="${filename}" />`;
       });
     }
 
-    async function saveResultsToSheet() {
+    async function saveToSheet() {
       const inputs = document.querySelectorAll('.name-field');
-      const saveSpinner = document.getElementById('saveSpinner');
-      saveSpinner.style.display = 'block';
-      let savedCount = 0;
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = 'block';
 
       for (let input of inputs) {
         const name = input.value.trim();
-        if (name) {
-          await saveToSheet(name, input.dataset.filename);
-          allNames.push(name);
-          savedCount++;
-          document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
-        }
+        const filename = input.dataset.filename;
+        if (!name) continue;
+
+        const payload = {
+          name,
+          operator: operatorName,
+          session: sessionId,
+          image: filename,
+          timestamp: new Date().getTime()
+        };
+
+        const res = await fetch("/.netlify/functions/submit-to-sheet", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        allNames.push(name);
+        document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
       }
 
-      saveSpinner.style.display = 'none';
-      document.getElementById('saveControls').style.display = 'none';
-      document.getElementById('postSaveControls').style.display = 'block';
+      spinner.style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('postSaveButtons').style.display = 'block';
     }
 
-    function scanAnother() {
-      document.getElementById('output').innerHTML = '';
+    function resetForNext() {
       document.getElementById('imageInput').value = '';
-      document.getElementById('saveControls').style.display = 'none';
-      document.getElementById('postSaveControls').style.display = 'none';
-      document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
+      document.getElementById('output').innerHTML = '';
+      document.getElementById('postSaveButtons').style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('uploadSection').style.display = 'block';
     }
 
     function endSession() {
-      document.body.innerHTML = '<h1 style="text-align:center; padding-top:3rem;">Thank you, scan again one day!</h1>';
-    }
-
-    async function saveToSheet(name, filename) {
-      const payload = {
-        name: name,
-        operator: operatorName,
-        session: sessionId,
-        image: filename,
-        timestamp: new Date().getTime()
-      };
-
-      const res = await fetch("/.netlify/functions/submit-to-sheet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const text = await res.text();
-      console.log("Sheet response:", text);
+      document.body.innerHTML = `
+        <img src="https://aceofclubs.netlify.app/assets/logo.png" style="max-width:80px;margin:2rem auto;display:block;" />
+        <h2>Thank you, scan again one day!</h2>
+      `;
     }
   </script>
 </body>
