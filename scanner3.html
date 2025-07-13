@@ -13,7 +13,7 @@
     }
 
     img.logo {
-      max-width: 150px; /* Half original size */
+      max-width: 150px;
       margin-bottom: 20px;
     }
 
@@ -26,11 +26,15 @@
     .hidden {
       display: none;
     }
+
+    #resultsContainer {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
 
-  <img src="assets/aceofclubs-logo.png" alt="Logo" class="logo" />
+  <img src="assets/001_homepage_logo.png" alt="Logo" class="logo" />
 
   <h1>Registration Form AI Scanner</h1>
 
@@ -44,19 +48,37 @@
     <input type="file" id="imageInput" accept="image/*" />
   </div>
 
-  <div id="postScanButtons" class="hidden">
-    <button id="nextBtn">Save and scan next photo</button>
-    <button id="finishBtn">Finished scanning</button>
+  <div id="spinner" class="hidden">
+    <p>⏳ Scanning, please wait...</p>
   </div>
 
+  <div id="resultsContainer" class="hidden"></div>
+
+  <div id="postScanButtons" class="hidden">
+    <button id="saveBtn">Save Results</button>
+  </div>
+
+  <div id="saveSpinner" class="hidden">
+    <p>💾 Saving rows to Google Sheets...</p>
+  </div>
+
+  <div id="finalButtons" class="hidden">
+    <p>✅ Check saved version at <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?gid=0#gid=0" target="_blank">Google Sheet</a></p>
+    <button onclick="location.reload()">Save and Scan Another</button>
+    <button onclick="document.getElementById('finalMessage').classList.remove('hidden')">Save and Finish</button>
+  </div>
+
+  <p id="finalMessage" class="hidden" style="margin-top: 20px; font-weight: bold;">All done – bye bye 👋</p>
+
+  <script src="scan2.js"></script>
   <script>
     let sessionId = '';
     let operator = '';
+    let scannedRows = [];
 
     document.getElementById('startBtn').addEventListener('click', () => {
       operator = document.getElementById('operator').value.trim();
       if (!operator) return alert('Please enter your name first.');
-
       sessionId = `session-${Date.now()}`;
       document.getElementById('uploadSection').classList.remove('hidden');
     });
@@ -69,6 +91,7 @@
       reader.onload = async function () {
         const base64Image = reader.result.split(',')[1];
 
+        document.getElementById('spinner').classList.remove('hidden');
         const response = await fetch('/.netlify/functions/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -80,16 +103,40 @@
         });
 
         const result = await response.json();
-        if (result.status === 'ok') {
-          alert('Scan successful!');
+        document.getElementById('spinner').classList.add('hidden');
+
+        if (result.rows && result.rows.length) {
+          scannedRows = result.rows;
+          const container = document.getElementById('resultsContainer');
+          container.innerHTML = '<h3>Scan Results</h3><ul>' +
+            result.rows.map(row => `<li>${row.join(' | ')}</li>`).join('') + '</ul>';
+          container.classList.remove('hidden');
           document.getElementById('postScanButtons').classList.remove('hidden');
         } else {
-          alert('Scan failed. Try again.');
+          alert('Scan failed or no results found.');
         }
       };
       reader.readAsDataURL(file);
     });
-  </script>
 
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      document.getElementById('saveSpinner').classList.remove('hidden');
+      for (const row of scannedRows) {
+        await fetch('https://script.google.com/macros/s/AKfycbyyMbyapKdpbZlwvf_fQ6lyyQX9pQqAaWzYyRXmeN3n9KiKlPGL2U7_VmOPqz7UbUYY/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            timestamp: Date.now().toString(),
+            name: operator,
+            session: sessionId,
+            image: 'NA',
+            operator: operator
+          })
+        });
+      }
+      document.getElementById('saveSpinner').classList.add('hidden');
+      document.getElementById('finalButtons').classList.remove('hidden');
+    });
+  </script>
 </body>
 </html>
