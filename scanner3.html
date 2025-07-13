@@ -64,9 +64,14 @@
 
   <div id="output"></div>
 
-  <div id="controls" style="display:none;">
-    <button onclick="saveAndContinue()">Save and scan next photo</button>
-    <button onclick="finishSession()">Finished scanning</button>
+  <div id="saveControls" style="display:none; text-align:center;">
+    <button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>
+    <div id="saveSpinner" class="spinner" style="display:none;"></div>
+  </div>
+
+  <div id="postSaveControls" style="display:none; text-align:center;">
+    <button onclick="scanAnother()">Scan another photo</button>
+    <button onclick="endSession()">All done</button>
   </div>
 
   <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
@@ -82,7 +87,6 @@
       if (!operatorName) return alert("Enter your name");
       sessionId = 'sess_' + Date.now();
       document.getElementById('scannerArea').style.display = 'block';
-      document.getElementById('controls').style.display = 'none';
     }
 
     document.getElementById('imageInput').addEventListener('change', async function(event) {
@@ -97,7 +101,7 @@
         const imageUrl = await uploadToImgbb(base64);
         const names = await fetchNamesFromScan(imageUrl);
         renderEditableFields(names, file.name);
-        document.getElementById('controls').style.display = 'block';
+        document.getElementById('saveControls').style.display = 'block';
       } catch (err) {
         output.innerHTML = `<p style="color:red;">Scan failed. ${err.message}</p>`;
       }
@@ -155,27 +159,37 @@
       });
     }
 
-    async function saveAndContinue() {
+    async function saveResultsToSheet() {
       const inputs = document.querySelectorAll('.name-field');
+      const saveSpinner = document.getElementById('saveSpinner');
+      saveSpinner.style.display = 'block';
+      let savedCount = 0;
+
       for (let input of inputs) {
         const name = input.value.trim();
         if (name) {
           await saveToSheet(name, input.dataset.filename);
           allNames.push(name);
+          savedCount++;
           document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
         }
       }
-      document.getElementById('output').innerHTML = '';
-      document.getElementById('imageInput').value = '';
-      document.getElementById('controls').style.display = 'none';
+
+      saveSpinner.style.display = 'none';
+      document.getElementById('saveControls').style.display = 'none';
+      document.getElementById('postSaveControls').style.display = 'block';
     }
 
-    async function finishSession() {
-      await saveAndContinue();
-      document.getElementById('summary').innerHTML =
-        `<h2>Session Complete</h2><p><strong>${allNames.length}</strong> names saved</p><ul>${allNames.map(n => `<li>${n}</li>`).join('')}</ul>`;
-      document.getElementById('summary').style.display = 'block';
-      document.getElementById('scannerArea').style.display = 'none';
+    function scanAnother() {
+      document.getElementById('output').innerHTML = '';
+      document.getElementById('imageInput').value = '';
+      document.getElementById('saveControls').style.display = 'none';
+      document.getElementById('postSaveControls').style.display = 'none';
+      document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
+    }
+
+    function endSession() {
+      document.body.innerHTML = '<h1 style="text-align:center; padding-top:3rem;">Thank you, scan again one day!</h1>';
     }
 
     async function saveToSheet(name, filename) {
