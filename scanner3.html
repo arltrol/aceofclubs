@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form AI Scanner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff6f0;
+      text-align: center;
+      padding: 20px;
+    }
+
+    img.logo {
+      max-width: 150px; /* Half original size */
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 1em;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="assets/aceofclubs-logo.png" alt="Logo" class="logo" />
+
+  <h1>Registration Form AI Scanner</h1>
+
+  <input type="text" id="operator" placeholder="Enter your name" required />
+
+  <div>
+    <button id="startBtn">Start New Session</button>
+  </div>
+
+  <div id="uploadSection" class="hidden">
+    <input type="file" id="imageInput" accept="image/*" />
+  </div>
+
+  <div id="postScanButtons" class="hidden">
+    <button id="nextBtn">Save and scan next photo</button>
+    <button id="finishBtn">Finished scanning</button>
+  </div>
+
+  <script>
+    let sessionId = '';
+    let operator = '';
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      operator = document.getElementById('operator').value.trim();
+      if (!operator) return alert('Please enter your name first.');
+
+      sessionId = `session-${Date.now()}`;
+      document.getElementById('uploadSection').classList.remove('hidden');
+    });
+
+    document.getElementById('imageInput').addEventListener('change', async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async function () {
+        const base64Image = reader.result.split(',')[1];
+
+        const response = await fetch('/.netlify/functions/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: operator,
+            session: sessionId,
+            image: base64Image
+          })
+        });
+
+        const result = await response.json();
+        if (result.status === 'ok') {
+          alert('Scan successful!');
+          document.getElementById('postScanButtons').classList.remove('hidden');
+        } else {
+          alert('Scan failed. Try again.');
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+
+</body>
+</html>
