@@ -125,21 +125,27 @@
       document.getElementById('scannerArea').style.display = 'none';
     }
 
-    async function saveToSheet(name, filename) {
-      const payload = new URLSearchParams();
-      payload.append("name", name);
-      payload.append("operator", operatorName);
-      payload.append("session", sessionId);
-      payload.append("image", filename);
-      payload.append("timestamp", new Date().getTime());
+   async function saveToSheet(name, filename) {
+  const payload = {
+    name,
+    operator: operatorName,
+    session: sessionId,
+    image: filename,
+    timestamp: new Date().getTime()
+  };
 
-    const res = await fetch("/.netlify/functions/submit-to-sheet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: payload.toString(),
-      });
+  const res = await fetch("/.netlify/functions/submit-to-sheet", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const text = await res.text();
+  console.log("Sheet response:", text);
+}
+
 
       const text = await res.text();
       console.log("Sheet response:", text);
