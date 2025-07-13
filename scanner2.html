@@ -125,32 +125,26 @@
       document.getElementById('scannerArea').style.display = 'none';
     }
 
-   async function saveToSheet(name, filename) {
-  const payload = {
-    name,
-    operator: operatorName,
-    session: sessionId,
-    image: filename,
-    timestamp: new Date().getTime()
-  };
+    async function saveToSheet(name, filename) {
+      const payload = {
+        name,
+        operator: operatorName,
+        session: sessionId,
+        image: filename,
+        timestamp: new Date().getTime()
+      };
 
-  const res = await fetch("/.netlify/functions/submit-to-sheet", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const text = await res.text();
-  console.log("Sheet response:", text);
-}
-
+      const res = await fetch("/.netlify/functions/submit-to-sheet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload),
+      });
 
       const text = await res.text();
       console.log("Sheet response:", text);
     }
-
   </script>
 </body>
 </html>
