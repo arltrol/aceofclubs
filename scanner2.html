@@ -132,10 +132,15 @@
         image: filename,
         timestamp: new Date().toISOString()
       };
-      await fetch("https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+    await fetch("https://script.google.com/macros/s/AKfycbzjTlifICLdi4k-LmxIRz4nFOIfgvhsEQsle6Nm4hWfyZTlZEnmDnNi7GDCOnYHxwRi/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload),
+});
+
+      
     }
   </script>
 </body>
