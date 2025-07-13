@@ -76,12 +76,12 @@
 
   <p id="recordCount" style="text-align:center; font-weight:bold;"></p>
   <p id="sheetLink" style="text-align:center; display:none;">
-  Google Sheet Link: 
-  <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing"
-     target="_blank" rel="noopener noreferrer">
-     View in Google Sheets
-  </a>
-</p>
+    Google Sheet Link: 
+    <a href="https://docs.google.com/spreadsheets/d/11gUHs1QJrmJq_gTSYYB8cTX9wvq0u8ODRUhmwL16b1Y/edit?usp=sharing"
+      target="_blank" rel="noopener noreferrer">
+      View in Google Sheets
+    </a>
+  </p>
   <div id="summary" style="display:none;"></div>
 
   <script>
@@ -110,7 +110,7 @@
         renderEditableFields(names, file.name);
         document.getElementById('saveControls').style.display = 'block';
       } catch (err) {
-        output.innerHTML = <p style="color:red;">Scan failed. ${err.message}</p>;
+        output.innerHTML = `<p style="color:red;">Scan failed. ${err.message}</p>`;
       }
     });
 
@@ -160,9 +160,9 @@
 
     function renderEditableFields(names, filename) {
       const output = document.getElementById('output');
-      output.innerHTML = <h2>Edit Names from ${filename}</h2>;
+      output.innerHTML = `<h2>Edit Names from ${filename}</h2>`;
       names.forEach((name, i) => {
-        output.innerHTML += <input class="name-field" type="text" value="${name}" data-filename="${filename}" />;
+        output.innerHTML += `<input class="name-field" type="text" value="${name}" data-filename="${filename}" />`;
       });
     }
 
@@ -178,7 +178,7 @@
           await saveToSheet(name, input.dataset.filename);
           allNames.push(name);
           savedCount++;
-          document.getElementById('recordCount').innerText = ${allNames.length} name(s) saved so far.;
+          document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
         }
       }
 
@@ -193,7 +193,7 @@
       document.getElementById('imageInput').value = '';
       document.getElementById('saveControls').style.display = 'none';
       document.getElementById('postSaveControls').style.display = 'none';
-      document.getElementById('recordCount').innerText = ${allNames.length} name(s) saved so far.;
+      document.getElementById('recordCount').innerText = `${allNames.length} name(s) saved so far.`;
     }
 
     function endSession() {
