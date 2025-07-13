@@ -94,10 +94,12 @@
 
   <div id="output"></div>
 
-  <div id="saveControls" style="display:none; text-align:center;">
-    <button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>
-    <div id="saveSpinner" class="spinner" style="display:none;"></div>
-  </div>
+ <div id="saveControls" style="display:none; text-align:center;">
+  <button onclick="saveResultsToSheet()">Save this data in Google Sheets</button>
+  <div id="saveSpinner" class="spinner" style="display:none;"></div>
+  <div style="height: 60px;"></div> <!-- Add spacer to prevent edge flush on mobile -->
+</div>
+
 
   <div id="postSaveControls" style="display:none; text-align:center;">
     <button onclick="scanAnother()">Scan another photo</button>
