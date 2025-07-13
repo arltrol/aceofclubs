@@ -58,6 +58,25 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    #imageInput {
+  display: none;
+}
+
+.custom-file-upload {
+  display: block;
+  width: 90%;
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background-color: #f97316;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
@@ -68,8 +87,10 @@
   <button id="start-session-button" onclick="startSession()">Start New Session</button>
 
   <div id="scannerArea" style="display:none;">
-    <input type="file" accept="image/*" id="imageInput" style="display: block;" />
+    <label for="imageInput" class="custom-file-upload">📷 Choose a Photo</label>
+    <input type="file" accept="image/*" id="imageInput" />
   </div>
+  
 
   <div id="output"></div>
 
